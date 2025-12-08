@@ -3,11 +3,13 @@
 
 #include "Character/KaijuPlayerCharacter.h"
 
+#include "AbilitySystemComponent.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "InputActionValue.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
+#include "Player/KaijuPlayerState.h"
 
 AKaijuPlayerCharacter::AKaijuPlayerCharacter()
 {
@@ -24,16 +26,42 @@ AKaijuPlayerCharacter::AKaijuPlayerCharacter()
 	Mesh1P->bCastDynamicShadow = false;
 	Mesh1P->CastShadow = false;
 	Mesh1P->SetRelativeLocation(FVector(-30.f, 0.f, -150.f));
+
+	GetMesh()->SetOwnerNoSee(true);
+}
+
+void AKaijuPlayerCharacter::PossessedBy(AController* NewController)
+{
+	Super::PossessedBy(NewController);
+
+	InitAbilityActorInfo();
+}
+
+void AKaijuPlayerCharacter::OnRep_PlayerState()
+{
+	Super::OnRep_PlayerState();
+
+	InitAbilityActorInfo();
+}
+
+void AKaijuPlayerCharacter::InitAbilityActorInfo()
+{
+	AKaijuPlayerState* KaijuPlayerState = Cast<AKaijuPlayerState>(GetPlayerState());
+	check(KaijuPlayerState);
+
+	AbilitySystemComponent = KaijuPlayerState->GetAbilitySystemComponent();
+	AttributeSet = KaijuPlayerState->GetAttributeSet();
+
+	AbilitySystemComponent->InitAbilityActorInfo(KaijuPlayerState, this);
+	
 }
 
 void AKaijuPlayerCharacter::Move(const FInputActionValue& Value)
 {
-	// input is a Vector2D
 	FVector2D MovementVector = Value.Get<FVector2D>();
 
 	if (Controller != nullptr)
 	{
-		// add movement 
 		AddMovementInput(GetActorForwardVector(), MovementVector.Y);
 		AddMovementInput(GetActorRightVector(), MovementVector.X);
 	}
@@ -41,12 +69,10 @@ void AKaijuPlayerCharacter::Move(const FInputActionValue& Value)
 
 void AKaijuPlayerCharacter::Look(const FInputActionValue& Value)
 {
-	// input is a Vector2D
 	FVector2D LookAxisVector = Value.Get<FVector2D>();
 
 	if (Controller != nullptr)
 	{
-		// add yaw and pitch input to controller
 		AddControllerYawInput(LookAxisVector.X);
 		AddControllerPitchInput(LookAxisVector.Y);
 	}
@@ -68,7 +94,6 @@ void AKaijuPlayerCharacter::NotifyControllerChanged()
 
 void AKaijuPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
-	// Set up action bindings
 	if (UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(PlayerInputComponent))
 	{
 		// Jumping

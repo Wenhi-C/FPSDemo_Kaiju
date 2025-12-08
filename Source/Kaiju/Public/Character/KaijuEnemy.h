@@ -13,5 +13,10 @@ UCLASS()
 class KAIJU_API AKaijuEnemy : public AKaijuBaseCharacter
 {
 	GENERATED_BODY()
+public:
+	AKaijuEnemy();
+protected:
+	virtual void BeginPlay() override;
 	
+	virtual void InitAbilityActorInfo() override;
 };

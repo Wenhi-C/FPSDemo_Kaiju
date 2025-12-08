@@ -14,10 +14,17 @@ UCLASS()
 class KAIJU_API AKaijuPlayerState : public APlayerState
 {
 	GENERATED_BODY()
-AKaijuPlayerState();
+public:
+	AKaijuPlayerState();
+
+	UFUNCTION(BlueprintPure)
+	UAbilitySystemComponent* GetAbilitySystemComponent() const { return AbilitySystemComponent; }
+	UFUNCTION(BlueprintPure)
+	UAttributeSet* GetAttributeSet() const { return AttributeSet; }
+
 protected:
 	
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY()
 	TObjectPtr<UAbilitySystemComponent> AbilitySystemComponent;
 
 	UPROPERTY()
