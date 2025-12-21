@@ -30,29 +30,7 @@ public:
 protected:
 
 	virtual void InitAbilityActorInfo() override;
-	
-	/* Input */
-	
-	void Move(const FInputActionValue& Value);
-	void Look(const FInputActionValue& Value);
 
-	virtual void NotifyControllerChanged() override;
-	virtual void SetupPlayerInputComponent(UInputComponent* PlayerInputComponent) override;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
-	UInputMappingContext* DefaultMappingContext;
-	
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Input, meta=(AllowPrivateAccess = "true"))
-	UInputAction* JumpAction;
-	
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Input, meta=(AllowPrivateAccess = "true"))
-	UInputAction* MoveAction;
-	
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
-	class UInputAction* LookAction;
-	
-	/* Input */
-	
 private:
 	/** Pawn mesh: 1st person view (arms; seen only by self) */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Mesh, meta = (AllowPrivateAccess = "true"))

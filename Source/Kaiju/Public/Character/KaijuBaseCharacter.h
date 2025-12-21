@@ -16,6 +16,7 @@ class KAIJU_API AKaijuBaseCharacter : public ACharacter, public IAbilitySystemIn
 	
 public:
 	AKaijuBaseCharacter();
+	
 	/* AbilitySystem Interface */
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 	/* AbilitySystem Interface */
