@@ -4,6 +4,11 @@
 #include "Character/KaijuBaseCharacter.h"
 
 
+AKaijuBaseCharacter::AKaijuBaseCharacter()
+{
+
+}
+
 UAbilitySystemComponent* AKaijuBaseCharacter::GetAbilitySystemComponent() const
 {
 	return AbilitySystemComponent;

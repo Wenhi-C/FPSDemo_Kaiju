@@ -13,9 +13,9 @@ UCLASS()
 class KAIJU_API AKaijuBaseCharacter : public ACharacter, public IAbilitySystemInterface
 {
 	GENERATED_BODY()
-
+	
 public:
-
+	AKaijuBaseCharacter();
 	/* AbilitySystem Interface */
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 	/* AbilitySystem Interface */
@@ -27,8 +27,6 @@ public:
 	
 protected:
 
-	UPROPERTY(EditAnywhere)
-	TObjectPtr<USkeletalMeshComponent> Weapon = nullptr;
 
 	UPROPERTY()
 	TObjectPtr<UAbilitySystemComponent> AbilitySystemComponent;
