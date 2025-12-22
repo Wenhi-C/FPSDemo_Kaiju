@@ -2,4 +2,28 @@
 
 
 #include "AbilitySystem/KaijuAttributeSet.h"
+#include "AbilitySystemComponent.h"
+#include "Net/UnrealNetwork.h"
 
+UKaijuAttributeSet::UKaijuAttributeSet()
+{
+	InitHealth(100.f);
+}
+
+void UKaijuAttributeSet::GetLifetimeReplicatedProps(TArray<class FLifetimeProperty>& OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+
+	DOREPLIFETIME_CONDITION_NOTIFY(UKaijuAttributeSet, Health, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UKaijuAttributeSet, MaxHealth, COND_None, REPNOTIFY_Always);
+}
+
+void UKaijuAttributeSet::OnRep_Health(const FGameplayAttributeData& OldHealth) const
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UKaijuAttributeSet, Health, OldHealth);
+}
+
+void UKaijuAttributeSet::OnRep_MaxHealth(const FGameplayAttributeData& OldMaxHealth) const
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UKaijuAttributeSet, MaxHealth, OldMaxHealth);
+}
