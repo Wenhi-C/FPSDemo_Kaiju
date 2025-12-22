@@ -27,8 +27,15 @@ void AKaijuPlayerController::Move(const FInputActionValue& Value)
 {
 	FVector2D MovementVector = Value.Get<FVector2D>();
 	if (!LoadControlledCharacter()) return;
-	ControlledCharacter->AddMovementInput(ControlledCharacter->GetActorForwardVector(), MovementVector.Y);
-	ControlledCharacter->AddMovementInput(ControlledCharacter->GetActorRightVector(), MovementVector.X);
+
+	const FRotator Rotation = GetControlRotation();
+	const FRotator YawRotation(0, Rotation.Yaw, 0);
+
+	const FVector ForwardDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
+	const FVector RightDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
+
+	ControlledCharacter->AddMovementInput(ForwardDirection, MovementVector.Y);
+	ControlledCharacter->AddMovementInput(RightDirection, MovementVector.X);
 }
 
 void AKaijuPlayerController::Look(const FInputActionValue& Value)
