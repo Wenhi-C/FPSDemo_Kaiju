@@ -17,9 +17,6 @@ void AKaijuPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
 	
-	ControlledCharacter = GetPawn<ACharacter>();
-	check(ControlledCharacter);
-	
 	check(DefaultMappingContext)
 	if (UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(GetLocalPlayer()))
 	{
@@ -29,7 +26,7 @@ void AKaijuPlayerController::BeginPlay()
 void AKaijuPlayerController::Move(const FInputActionValue& Value)
 {
 	FVector2D MovementVector = Value.Get<FVector2D>();
-
+	if (!LoadControlledCharacter()) return;
 	ControlledCharacter->AddMovementInput(ControlledCharacter->GetActorForwardVector(), MovementVector.Y);
 	ControlledCharacter->AddMovementInput(ControlledCharacter->GetActorRightVector(), MovementVector.X);
 }
@@ -37,19 +34,22 @@ void AKaijuPlayerController::Move(const FInputActionValue& Value)
 void AKaijuPlayerController::Look(const FInputActionValue& Value)
 {
 	FVector2D LookAxisVector = Value.Get<FVector2D>();
-
+	if (!LoadControlledCharacter()) return;
 	ControlledCharacter->AddControllerYawInput(LookAxisVector.X);
 	ControlledCharacter->AddControllerPitchInput(LookAxisVector.Y);
+
 }
 
 void AKaijuPlayerController::JumpStart(const FInputActionValue& Value)
 {
-	ControlledCharacter->Jump();
+	if (LoadControlledCharacter())
+		ControlledCharacter->Jump();
 }
 
 void AKaijuPlayerController::JumpEnd(const FInputActionValue& Value)
 {
-	ControlledCharacter->StopJumping();
+	if (LoadControlledCharacter())
+		ControlledCharacter->StopJumping();
 }
 
 void AKaijuPlayerController::SetupInputComponent()
@@ -73,4 +73,10 @@ void AKaijuPlayerController::SetupInputComponent()
 	{
 		UE_LOG(LogTemp, Error, TEXT("'%s' Failed to find an Enhanced Input Component! This template is built to use the Enhanced Input system. If you intend to use the legacy system, then you will need to update this C++ file."), *GetNameSafe(this));
 	}
+}
+
+bool AKaijuPlayerController::LoadControlledCharacter()
+{
+	if (!ControlledCharacter) ControlledCharacter = GetPawn<ACharacter>();
+	return ControlledCharacter != nullptr;
 }

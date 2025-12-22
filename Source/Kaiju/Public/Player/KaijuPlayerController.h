@@ -45,5 +45,9 @@ protected:
 
 	UPROPERTY()
 	TObjectPtr<ACharacter> ControlledCharacter;
+
+	// 加载ControlledCharacter,在使用ControlledCharacter前调用，返回是否有效
+	UFUNCTION()
+	bool LoadControlledCharacter();
 	/* Input */
 };
