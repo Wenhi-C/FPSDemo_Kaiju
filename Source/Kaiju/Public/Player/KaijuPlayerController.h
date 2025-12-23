@@ -28,6 +28,7 @@ protected:
 	void Look(const FInputActionValue& Value);
 	void JumpStart(const FInputActionValue& Value);
 	void JumpEnd(const FInputActionValue& Value);
+	void Fire(const FInputActionValue& Value);
 
 	virtual void SetupInputComponent() override;
 
@@ -42,6 +43,9 @@ protected:
 	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	class UInputAction* LookAction;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	class UInputAction* FireAction;
 
 	UPROPERTY()
 	TObjectPtr<ACharacter> ControlledCharacter;

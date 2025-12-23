@@ -59,6 +59,17 @@ void AKaijuPlayerController::JumpEnd(const FInputActionValue& Value)
 		ControlledCharacter->StopJumping();
 }
 
+void AKaijuPlayerController::Fire(const FInputActionValue& Value)
+{
+	if (!LoadControlledCharacter()) return;
+	AKaijuPlayerCharacter* KaijuPlayerCharacterPlayer = Cast<AKaijuPlayerCharacter>(ControlledCharacter);
+	UE_LOG(LogTemp, Warning, TEXT("AKaijuPlayerController::Fire"));
+	if (KaijuPlayerCharacterPlayer->GetWeapon())
+	{
+		
+	}
+}
+
 void AKaijuPlayerController::SetupInputComponent()
 {
 	Super::SetupInputComponent();
@@ -75,6 +86,9 @@ void AKaijuPlayerController::SetupInputComponent()
 
 		// Looking
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &AKaijuPlayerController::Look);
+
+		// Fire
+		EnhancedInputComponent->BindAction(FireAction, ETriggerEvent::Triggered, this, &AKaijuPlayerController::Fire);
 	}
 	else
 	{
