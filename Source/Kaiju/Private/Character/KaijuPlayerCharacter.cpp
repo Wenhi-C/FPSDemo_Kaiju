@@ -7,6 +7,7 @@
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "InputActionValue.h"
+#include "Actor/KaijuWeapon.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
@@ -38,6 +39,7 @@ void AKaijuPlayerCharacter::PossessedBy(AController* NewController)
 	Super::PossessedBy(NewController);
 
 	InitAbilityActorInfo();
+	AddCharacterAbilities();
 }
 
 void AKaijuPlayerCharacter::OnRep_PlayerState()
@@ -45,6 +47,13 @@ void AKaijuPlayerCharacter::OnRep_PlayerState()
 	Super::OnRep_PlayerState();
 
 	InitAbilityActorInfo();
+}
+
+FVector AKaijuPlayerCharacter::GetWeaponMuzzleLocation() const
+{
+	if (Weapon)
+		return Weapon->WeaponMesh->GetSocketLocation(FName("Muzzle"));
+	return FVector::ZeroVector;
 }
 
 void AKaijuPlayerCharacter::InitAbilityActorInfo()
