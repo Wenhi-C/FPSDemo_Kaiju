@@ -7,6 +7,7 @@
 #include "AbilitySystemInterface.h"
 #include "KaijuBaseCharacter.generated.h"
 
+class UGameplayAbility;
 class UAttributeSet;
 
 UCLASS()
@@ -28,13 +29,16 @@ public:
 	
 protected:
 
-
+	void AddCharacterAbilities();
+	
 	UPROPERTY()
 	TObjectPtr<UAbilitySystemComponent> AbilitySystemComponent;
 
 	UPROPERTY()
 	TObjectPtr<UAttributeSet> AttributeSet;
 
+	UPROPERTY(EditDefaultsOnly)
+	TArray<TSubclassOf<UGameplayAbility>> StartupAbilities;
 	
 	
 };
