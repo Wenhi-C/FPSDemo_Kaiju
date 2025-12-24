@@ -18,6 +18,20 @@ void AKaijuEnemy::BeginPlay()
 {
 	Super::BeginPlay();
 	InitAbilityActorInfo();
+
+	UKaijuAttributeSet* KaijuAS = Cast<UKaijuAttributeSet>(AttributeSet);
+	AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(KaijuAS->GetHealthAttribute()).AddLambda(
+		[this](const FOnAttributeChangeData& Data)
+		{
+			OnHealthChangedDelegate.Broadcast(Data.NewValue);
+		});
+	AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(KaijuAS->GetMaxHealthAttribute()).AddLambda(
+		[this](const FOnAttributeChangeData& Data)
+		{
+			OnMaxHealthChangedDelegate.Broadcast(Data.NewValue);
+		});
+	OnHealthChangedDelegate.Broadcast(KaijuAS->GetHealth());
+	OnMaxHealthChangedDelegate.Broadcast(KaijuAS->GetMaxHealth());
 }
 
 void AKaijuEnemy::InitAbilityActorInfo()
