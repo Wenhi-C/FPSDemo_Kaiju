@@ -16,4 +16,8 @@ void FKaijuGameplayTags::InitializeNativeGameplayTags()
 	GameplayTags.Input_Fire = UGameplayTagsManager::Get().AddNativeGameplayTag(
 		"Input.Fire",
 		FString("Fire Ability Input"));
+
+	GameplayTags.Damage = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		"Damage",
+		FString("Damage"));
 }

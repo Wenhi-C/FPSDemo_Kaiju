@@ -9,6 +9,7 @@
 class USphereComponent;
 class UProjectileMovementComponent;
 class UNiagaraSystem;
+class UGameplayEffect;
 
 UCLASS()
 class KAIJU_API AKaijuBullet : public AActor
@@ -17,10 +18,12 @@ class KAIJU_API AKaijuBullet : public AActor
 	
 public:	
 	AKaijuBullet();
-
+	
+	void SetDamage(float InDamage) { Damage = InDamage; }
+	
 protected:
 	virtual void BeginPlay() override;
-
+	
 	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<UProjectileMovementComponent> ProjectileMovement;
 
@@ -39,4 +42,10 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly)
 	float LifeSpan = 5.f;
+
+	UPROPERTY()
+	float Damage;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	TSubclassOf<UGameplayEffect> DamageEffectClass;
 };

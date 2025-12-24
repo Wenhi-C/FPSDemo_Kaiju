@@ -18,6 +18,8 @@ public:
 	FGameplayTag Abilities_Fire;
 
 	FGameplayTag Input_Fire;
+
+	FGameplayTag Damage;
 protected:
 	
 private:

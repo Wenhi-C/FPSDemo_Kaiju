@@ -2,7 +2,12 @@
 
 
 #include "Actor/KaijuBullet.h"
+
+#include "AbilitySystemBlueprintLibrary.h"
+#include "AbilitySystemComponent.h"
 #include "AbilitySystemInterface.h"
+#include "GameplayEffectTypes.h"
+#include "KaijuGameplayTags.h"
 #include "Components/SphereComponent.h"
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "Kismet/GameplayStatics.h"
@@ -53,6 +58,14 @@ void AKaijuBullet::OnSphereOverlap(UPrimitiveComponent* OverlappedComponent, AAc
 	}
 	if (OtherActor->Implements<UAbilitySystemInterface>())
 	{
+		const UAbilitySystemComponent* SourceASC = UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(GetOwner());
+		UAbilitySystemComponent* TargetASC = UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(OtherActor);
+		check(SourceASC);
+		FGameplayEffectContextHandle ContextHandle = SourceASC->MakeEffectContext();
+		FGameplayEffectSpecHandle EffectSpecHandle = SourceASC->MakeOutgoingSpec(DamageEffectClass, 1.f, ContextHandle);
+		FKaijuGameplayTags GameplayTags = FKaijuGameplayTags::Get();
+		UAbilitySystemBlueprintLibrary::AssignTagSetByCallerMagnitude(EffectSpecHandle, GameplayTags.Damage, -Damage);
+		TargetASC->ApplyGameplayEffectSpecToSelf(*EffectSpecHandle.Data.Get());
 		
 	}
 	Destroy();

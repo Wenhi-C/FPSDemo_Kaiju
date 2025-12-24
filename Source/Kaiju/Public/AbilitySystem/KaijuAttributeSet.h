@@ -39,4 +39,7 @@ public:
 	UFUNCTION()
 	void OnRep_MaxHealth(const FGameplayAttributeData& OldMaxHealth) const;
 
+protected:
+	void PostGameplayEffectExecute(const struct FGameplayEffectModCallbackData& Data) override;
+
 };

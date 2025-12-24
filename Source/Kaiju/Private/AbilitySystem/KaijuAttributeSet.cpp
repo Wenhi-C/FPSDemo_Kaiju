@@ -3,11 +3,14 @@
 
 #include "AbilitySystem/KaijuAttributeSet.h"
 #include "AbilitySystemComponent.h"
+#include "GameplayEffectExtension.h"
 #include "Net/UnrealNetwork.h"
 
 UKaijuAttributeSet::UKaijuAttributeSet()
 {
+	InitMaxHealth(100.f);
 	InitHealth(100.f);
+	
 }
 
 void UKaijuAttributeSet::GetLifetimeReplicatedProps(TArray<class FLifetimeProperty>& OutLifetimeProps) const
@@ -27,3 +30,14 @@ void UKaijuAttributeSet::OnRep_MaxHealth(const FGameplayAttributeData& OldMaxHea
 {
 	GAMEPLAYATTRIBUTE_REPNOTIFY(UKaijuAttributeSet, MaxHealth, OldMaxHealth);
 }
+
+void UKaijuAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallbackData& Data)
+{
+	Super::PostGameplayEffectExecute(Data);
+
+	if (Data.EvaluatedData.Attribute == GetHealthAttribute())
+	{
+		SetHealth(FMath::Clamp<float>(GetHealth(), 0, GetMaxHealth()));
+	}
+}
+
