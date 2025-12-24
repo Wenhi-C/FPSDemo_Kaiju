@@ -16,6 +16,8 @@ public:
 	static void InitializeNativeGameplayTags();
 
 	FGameplayTag Abilities_Fire;
+
+	FGameplayTag Input_Fire;
 protected:
 	
 private:

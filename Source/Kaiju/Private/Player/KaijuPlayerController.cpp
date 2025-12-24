@@ -3,8 +3,10 @@
 
 #include "Player/KaijuPlayerController.h"
 
+#include "AbilitySystemComponent.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
+#include "KaijuGameplayTags.h"
 #include "Character/KaijuPlayerCharacter.h"
 
 
@@ -63,10 +65,16 @@ void AKaijuPlayerController::Fire(const FInputActionValue& Value)
 {
 	if (!LoadControlledCharacter()) return;
 	AKaijuPlayerCharacter* KaijuPlayerCharacterPlayer = Cast<AKaijuPlayerCharacter>(ControlledCharacter);
-	UE_LOG(LogTemp, Warning, TEXT("AKaijuPlayerController::Fire"));
 	if (KaijuPlayerCharacterPlayer->GetWeapon())
 	{
-		
+		UAbilitySystemComponent* ASC = KaijuPlayerCharacterPlayer->GetAbilitySystemComponent();
+		for (const FGameplayAbilitySpec& AbilitySpec : ASC->GetActivatableAbilities())
+		{
+			if (AbilitySpec.GetDynamicSpecSourceTags().HasTagExact(FKaijuGameplayTags::Get().Input_Fire))
+			{
+				ASC->TryActivateAbility(AbilitySpec.Handle);
+			}
+		}
 	}
 }
 
