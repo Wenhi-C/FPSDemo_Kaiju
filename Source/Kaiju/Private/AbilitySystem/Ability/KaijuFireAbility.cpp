@@ -23,5 +23,7 @@ void UKaijuFireAbility::SpawnProjectile(const FVector& SpawnLocation, const FRot
 		Cast<APawn>(GetAvatarActorFromActorInfo()),
 		ESpawnActorCollisionHandlingMethod::AlwaysSpawn);
 
+	Bullet->SetOwner(GetAvatarActorFromActorInfo());
+	
 	Bullet->FinishSpawning(SpawnTransform);
 }
