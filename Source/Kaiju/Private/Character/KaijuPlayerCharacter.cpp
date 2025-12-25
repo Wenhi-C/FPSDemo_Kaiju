@@ -12,6 +12,7 @@
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Player/KaijuPlayerState.h"
+#include "UI/HUD/KaijuHUD.h"
 
 AKaijuPlayerCharacter::AKaijuPlayerCharacter()
 {
@@ -65,6 +66,13 @@ void AKaijuPlayerCharacter::InitAbilityActorInfo()
 	AttributeSet = KaijuPlayerState->GetAttributeSet();
 
 	AbilitySystemComponent->InitAbilityActorInfo(KaijuPlayerState, this);
-	
+
+	if (APlayerController* PlayerController = Cast<APlayerController>(GetController()))
+	{
+		if (AKaijuHUD* KaijuHUD = Cast<AKaijuHUD>(PlayerController->GetHUD()))
+		{
+			KaijuHUD->InitOverlay(PlayerController, GetPlayerState(), AbilitySystemComponent, AttributeSet);
+		}
+	}
 }
 

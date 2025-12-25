@@ -4,8 +4,10 @@
 
 #include "CoreMinimal.h"
 #include "Character/KaijuBaseCharacter.h"
+#include "UI/WidgetController/OverlayWidgetController.h"
+
 #include "KaijuEnemy.generated.h"
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnAttributeChangeSignature, float, NewValue);
+
 /**
  * 
  */
@@ -21,6 +23,7 @@ public:
 	
 	UPROPERTY(BlueprintAssignable, Category="GAS|Attribute")
 	FOnAttributeChangeSignature OnHealthChangedDelegate;
+	
 protected:
 	virtual void BeginPlay() override;
 	
