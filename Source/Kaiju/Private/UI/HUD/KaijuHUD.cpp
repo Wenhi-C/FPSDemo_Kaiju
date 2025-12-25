@@ -13,6 +13,7 @@ UOverlayWidgetController* AKaijuHUD::GetOverlayWidgetController(const FWidgetCon
 	{
 		OverlayWidgetController = NewObject<UOverlayWidgetController>(this, OverlayWidgetControllerClass);
 		OverlayWidgetController->SetWidgetControllerParams(WCParams);
+		OverlayWidgetController->BindCallbacksToDependencies();
 	}
 	return OverlayWidgetController;
 }
@@ -26,6 +27,7 @@ void AKaijuHUD::InitOverlay(APlayerController* PC, APlayerState* PS, UAbilitySys
 	const FWidgetControllerParams WCParams = FWidgetControllerParams(PC, PS, ASC, AS);
 	GetOverlayWidgetController(WCParams);
 	OverlayWidget->SetWidgetController(OverlayWidgetController);
+	OverlayWidgetController->BroadcastInitialValues();
 	OverlayWidget->AddToViewport();
 	
 }

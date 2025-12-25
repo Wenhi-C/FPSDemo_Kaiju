@@ -7,6 +7,10 @@
 #include "UObject/NoExportTypes.h"
 #include "KaijuWidgetController.generated.h"
 
+class UKaijuAttributeSet;
+class UKaijuAbilitySystemComponent;
+class AKaijuPlayerState;
+class AKaijuPlayerController;
 class UAttributeSet;
 class UAbilitySystemComponent;
 
@@ -56,4 +60,23 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	TObjectPtr<UAttributeSet> AttributeSet = nullptr;
+	
+	AKaijuPlayerController* GetKaijuPlayerController();
+	AKaijuPlayerState* GetKaijuPlayerState();
+	UKaijuAbilitySystemComponent* GetKaijuAbilitySystemComponent();
+	UKaijuAttributeSet* GetKaijuAttributeSet();
+	
+private:
+
+	UPROPERTY()
+	TObjectPtr<AKaijuPlayerController> KaijuPlayerController;
+
+	UPROPERTY()
+	TObjectPtr<AKaijuPlayerState> KaijuPlayerState;
+
+	UPROPERTY()
+	TObjectPtr<UKaijuAbilitySystemComponent> KaijuAbilitySystemComponent;
+
+	UPROPERTY()
+	TObjectPtr<UKaijuAttributeSet> KaijuAttributeSet;
 };
