@@ -5,6 +5,7 @@
 
 #include "AbilitySystem/KaijuAbilitySystemComponent.h"
 #include "AbilitySystem/KaijuAttributeSet.h"
+#include "GameFramework/PawnMovementComponent.h"
 
 AKaijuEnemy::AKaijuEnemy()
 {
@@ -12,6 +13,14 @@ AKaijuEnemy::AKaijuEnemy()
 	AbilitySystemComponent->SetIsReplicated(true);
 	AbilitySystemComponent->SetReplicationMode(EGameplayEffectReplicationMode::Minimal);
 	AttributeSet = CreateDefaultSubobject<UKaijuAttributeSet>("AttributeSet");
+}
+
+void AKaijuEnemy::Die_Implementation()
+{
+
+	Super::Die_Implementation();
+	SetLifeSpan(LifeSpan);
+	GetMovementComponent()->StopActiveMovement();
 }
 
 void AKaijuEnemy::BeginPlay()

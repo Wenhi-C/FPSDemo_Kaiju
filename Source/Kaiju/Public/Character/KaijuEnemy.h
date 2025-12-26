@@ -23,9 +23,14 @@ public:
 	
 	UPROPERTY(BlueprintAssignable, Category="GAS|Attribute")
 	FOnAttributeChangeSignature OnHealthChangedDelegate;
+
+	virtual void Die_Implementation() override;
 	
 protected:
 	virtual void BeginPlay() override;
 	
 	virtual void InitAbilityActorInfo() override;
+
+	UPROPERTY(EditDefaultsOnly)
+	float LifeSpan = 5.f;
 };

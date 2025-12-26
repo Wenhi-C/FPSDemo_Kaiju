@@ -42,8 +42,7 @@ protected:
 
 	virtual void InitAbilityActorInfo() override;
 
-	UPROPERTY(BlueprintReadWrite, VisibleAnywhere, Category = "Weapon")
-	TObjectPtr<AKaijuWeapon> Weapon; 
+	
 
 private:
 	/** Pawn mesh: 1st person view (arms; seen only by self) */

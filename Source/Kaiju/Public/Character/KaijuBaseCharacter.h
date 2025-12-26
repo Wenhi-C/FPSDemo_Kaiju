@@ -8,6 +8,7 @@
 #include "Interaction/CombatInterface.h"
 #include "KaijuBaseCharacter.generated.h"
 
+class AKaijuWeapon;
 class UGameplayAbility;
 class UAttributeSet;
 
@@ -23,6 +24,9 @@ public:
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 	/* AbilitySystem Interface */
 
+	UFUNCTION(NetMulticast, Reliable)
+	virtual void MulticastHandleDeath();
+	
 	/* Combat Interface */
 	virtual void Die_Implementation() override;
 	/* Combat Interface */
@@ -45,5 +49,8 @@ protected:
 	UPROPERTY(EditDefaultsOnly)
 	TArray<TSubclassOf<UGameplayAbility>> StartupAbilities;
 	
-	
+	UPROPERTY(BlueprintReadWrite, VisibleAnywhere, Category = "Weapon")
+	TObjectPtr<AKaijuWeapon> Weapon;
+
+
 };

@@ -4,6 +4,7 @@
 #include "AbilitySystem/KaijuAttributeSet.h"
 #include "AbilitySystemComponent.h"
 #include "GameplayEffectExtension.h"
+#include "Interaction/CombatInterface.h"
 #include "Net/UnrealNetwork.h"
 
 UKaijuAttributeSet::UKaijuAttributeSet()
@@ -38,6 +39,14 @@ void UKaijuAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallb
 	if (Data.EvaluatedData.Attribute == GetHealthAttribute())
 	{
 		SetHealth(FMath::Clamp<float>(GetHealth(), 0, GetMaxHealth()));
+		if (GetHealth() <= 0.f)
+		{
+			AActor* AvatarActor =GetOwningAbilitySystemComponent()->GetAvatarActor();
+			if (AvatarActor->Implements<UCombatInterface>())
+			{
+				ICombatInterface::Execute_Die(AvatarActor);
+			}
+		}
 	}
 }
 
