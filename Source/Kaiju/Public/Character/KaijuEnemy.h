@@ -8,6 +8,8 @@
 
 #include "KaijuEnemy.generated.h"
 
+class UBehaviorTree;
+class AKaijuAIController;
 /**
  * 
  */
@@ -17,6 +19,7 @@ class KAIJU_API AKaijuEnemy : public AKaijuBaseCharacter
 	GENERATED_BODY()
 public:
 	AKaijuEnemy();
+	virtual void PossessedBy(AController* NewController) override;
 
 	UPROPERTY(BlueprintAssignable, Category="GAS|Attribute")
 	FOnAttributeChangeSignature OnMaxHealthChangedDelegate;
@@ -33,4 +36,10 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly)
 	float LifeSpan = 5.f;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AI")
+	TObjectPtr<AKaijuAIController> KaijuAIController;
+
+	UPROPERTY(EditAnywhere, Category = "AI")
+	TObjectPtr<UBehaviorTree> BehaviorTree;
 };

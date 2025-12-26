@@ -5,6 +5,9 @@
 
 #include "AbilitySystem/KaijuAbilitySystemComponent.h"
 #include "AbilitySystem/KaijuAttributeSet.h"
+#include "AI/KaijuAIController.h"
+#include "BehaviorTree/BehaviorTree.h"
+#include "BehaviorTree/BlackboardComponent.h"
 #include "GameFramework/PawnMovementComponent.h"
 
 AKaijuEnemy::AKaijuEnemy()
@@ -13,6 +16,17 @@ AKaijuEnemy::AKaijuEnemy()
 	AbilitySystemComponent->SetIsReplicated(true);
 	AbilitySystemComponent->SetReplicationMode(EGameplayEffectReplicationMode::Minimal);
 	AttributeSet = CreateDefaultSubobject<UKaijuAttributeSet>("AttributeSet");
+}
+
+void AKaijuEnemy::PossessedBy(AController* NewController)
+{
+	Super::PossessedBy(NewController);
+
+	if (!HasAuthority()) return;
+	KaijuAIController = Cast<AKaijuAIController>(NewController);
+
+	KaijuAIController->GetBlackboardComponent()->InitializeBlackboard(*BehaviorTree->BlackboardAsset);
+	KaijuAIController->RunBehaviorTree(BehaviorTree);
 }
 
 void AKaijuEnemy::Die_Implementation()
