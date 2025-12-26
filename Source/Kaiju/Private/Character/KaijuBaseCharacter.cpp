@@ -16,6 +16,11 @@ UAbilitySystemComponent* AKaijuBaseCharacter::GetAbilitySystemComponent() const
 	return AbilitySystemComponent;
 }
 
+void AKaijuBaseCharacter::Die_Implementation()
+{
+	
+}
+
 void AKaijuBaseCharacter::InitAbilityActorInfo()
 {
 }

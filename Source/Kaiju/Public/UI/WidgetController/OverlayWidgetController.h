@@ -10,8 +10,9 @@ class UKaijuAbilitySystemComponent;
 class AKaijuPlayerState;
 class AKaijuPlayerController;
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnAttributeChangeSignature, float, NewValue);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnFireBroadcastSignature);
 /**
- * 
+ *
  */
 UCLASS(BlueprintType, Blueprintable)
 class KAIJU_API UOverlayWidgetController : public UKaijuWidgetController
@@ -26,5 +27,11 @@ public:
 
 	UPROPERTY(BlueprintAssignable, Category="GAS|Attribute")
 	FOnAttributeChangeSignature OnMaxHealthChange;
-	
+
+	UPROPERTY(BlueprintAssignable, Category="GAS|Fire")
+	FOnFireBroadcastSignature OnFireBroadcast;
+
+	UFUNCTION()
+	void OnFire();
+
 };

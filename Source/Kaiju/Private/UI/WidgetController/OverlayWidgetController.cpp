@@ -5,6 +5,8 @@
 
 #include "AbilitySystem/KaijuAbilitySystemComponent.h"
 #include "AbilitySystem/KaijuAttributeSet.h"
+#include "Character/KaijuPlayerCharacter.h"
+#include "Player/KaijuPlayerController.h"
 
 
 void UOverlayWidgetController::BroadcastInitialValues()
@@ -28,5 +30,19 @@ void UOverlayWidgetController::BindCallbacksToDependencies()
 			{
 				OnMaxHealthChange.Broadcast(Data.NewValue);
 			});
+
+	// 绑定玩家角色的开火委托
+	if (AKaijuPlayerController* PC = GetKaijuPlayerController())
+	{
+		if (AKaijuPlayerCharacter* PlayerCharacter = Cast<AKaijuPlayerCharacter>(PC->GetPawn()))
+		{
+			PlayerCharacter->OnFireDelegate.AddDynamic(this, &UOverlayWidgetController::OnFire);
+		}
+	}
+}
+
+void UOverlayWidgetController::OnFire()
+{
+	OnFireBroadcast.Broadcast();
 }
 

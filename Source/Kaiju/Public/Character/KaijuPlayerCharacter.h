@@ -12,6 +12,8 @@ class UInputAction;
 class UCameraComponent;
 class UInputComponent;
 struct FInputActionValue;
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnFireSignature);
 /**
  * 
  */
@@ -33,6 +35,9 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	AKaijuWeapon* GetWeapon() const { return Weapon; }
+
+	UPROPERTY(BlueprintReadOnly, BlueprintAssignable, BlueprintCallable)
+	FOnFireSignature OnFireDelegate;
 protected:
 
 	virtual void InitAbilityActorInfo() override;

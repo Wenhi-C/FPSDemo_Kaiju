@@ -5,13 +5,14 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "AbilitySystemInterface.h"
+#include "Interaction/CombatInterface.h"
 #include "KaijuBaseCharacter.generated.h"
 
 class UGameplayAbility;
 class UAttributeSet;
 
 UCLASS()
-class KAIJU_API AKaijuBaseCharacter : public ACharacter, public IAbilitySystemInterface
+class KAIJU_API AKaijuBaseCharacter : public ACharacter, public IAbilitySystemInterface, public ICombatInterface
 {
 	GENERATED_BODY()
 	
@@ -22,6 +23,10 @@ public:
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 	/* AbilitySystem Interface */
 
+	/* Combat Interface */
+	virtual void Die_Implementation() override;
+	/* Combat Interface */
+	
 	UAttributeSet* GetAttributeSet() const { return AttributeSet; };
 
 	// 初始化关于GAS的信息
