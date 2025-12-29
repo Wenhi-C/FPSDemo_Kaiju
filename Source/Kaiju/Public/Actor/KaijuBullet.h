@@ -21,8 +21,6 @@ public:
 	
 	void SetDamage(float InDamage) { Damage = InDamage; }
 
-	UPROPERTY()
-	FName SourceActorTag = FName();
 	
 protected:
 	virtual void BeginPlay() override;
