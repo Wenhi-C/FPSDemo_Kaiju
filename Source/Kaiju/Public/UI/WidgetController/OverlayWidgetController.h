@@ -28,6 +28,9 @@ public:
 	UPROPERTY(BlueprintAssignable, Category="GAS|Attribute")
 	FOnAttributeChangeSignature OnMaxHealthChange;
 
+	UPROPERTY(BlueprintAssignable, Category="GAS|Attribute")
+	FOnAttributeChangeSignature OnScoreChange;
+
 	UPROPERTY(BlueprintAssignable, Category="GAS|Fire")
 	FOnFireBroadcastSignature OnFireBroadcast;
 

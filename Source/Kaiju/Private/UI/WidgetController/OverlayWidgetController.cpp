@@ -13,6 +13,7 @@ void UOverlayWidgetController::BroadcastInitialValues()
 {
 	OnHealthChange.Broadcast(GetKaijuAttributeSet()->GetHealth());
 	OnMaxHealthChange.Broadcast(GetKaijuAttributeSet()->GetMaxHealth());
+	OnScoreChange.Broadcast(GetKaijuAttributeSet()->GetScore());
 }
 
 void UOverlayWidgetController::BindCallbacksToDependencies()
@@ -29,6 +30,13 @@ void UOverlayWidgetController::BindCallbacksToDependencies()
 			[this](const FOnAttributeChangeData& Data)
 			{
 				OnMaxHealthChange.Broadcast(Data.NewValue);
+			});
+
+	GetKaijuAbilitySystemComponent()->GetGameplayAttributeValueChangeDelegate(
+		GetKaijuAttributeSet()->GetScoreAttribute()).AddLambda(
+			[this](const FOnAttributeChangeData& Data)
+			{
+				OnScoreChange.Broadcast(Data.NewValue);
 			});
 
 	// 绑定玩家角色的开火委托
