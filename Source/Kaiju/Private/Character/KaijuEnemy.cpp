@@ -27,6 +27,8 @@ void AKaijuEnemy::PossessedBy(AController* NewController)
 
 	KaijuAIController->GetBlackboardComponent()->InitializeBlackboard(*BehaviorTree->BlackboardAsset);
 	KaijuAIController->RunBehaviorTree(BehaviorTree);
+
+	AddCharacterAbilities();
 }
 
 void AKaijuEnemy::Die_Implementation()

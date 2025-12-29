@@ -10,9 +10,7 @@
 AKaijuEffectActor::AKaijuEffectActor()
 {
 	PrimaryActorTick.bCanEverTick = true;
-
 	
-
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>("Mesh");
 	SetRootComponent(Mesh);
 

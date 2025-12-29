@@ -52,5 +52,5 @@ protected:
 	UPROPERTY(BlueprintReadWrite, VisibleAnywhere, Category = "Weapon")
 	TObjectPtr<AKaijuWeapon> Weapon;
 
-
+	
 };
