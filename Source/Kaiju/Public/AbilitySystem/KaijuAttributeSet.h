@@ -33,11 +33,18 @@ public:
 	FGameplayAttributeData MaxHealth;
 	ATTRIBUTE_ACCESSORS(UKaijuAttributeSet, MaxHealth)
 
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_Score, Category = "Attributes")
+	FGameplayAttributeData Score;
+	ATTRIBUTE_ACCESSORS(UKaijuAttributeSet, Score)
+
 	UFUNCTION()
 	void OnRep_Health(const FGameplayAttributeData& OldHealth) const;
 
 	UFUNCTION()
 	void OnRep_MaxHealth(const FGameplayAttributeData& OldMaxHealth) const;
+
+	UFUNCTION()
+	void OnRep_Score(const FGameplayAttributeData& OldScore) const;
 
 protected:
 	void PostGameplayEffectExecute(const struct FGameplayEffectModCallbackData& Data) override;
