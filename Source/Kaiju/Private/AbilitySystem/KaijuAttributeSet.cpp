@@ -8,6 +8,7 @@
 #include "Interaction/CombatInterface.h"
 #include "Character/KaijuEnemy.h"
 #include "Character/KaijuPlayerCharacter.h"
+#include "Kismet/GameplayStatics.h"
 #include "Net/UnrealNetwork.h"
 
 UKaijuAttributeSet::UKaijuAttributeSet()
@@ -67,6 +68,10 @@ void UKaijuAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallb
 							if (UKaijuAttributeSet* SourceAttributeSet = Cast<UKaijuAttributeSet>(PlayerCharacter->GetAttributeSet()))
 							{
 								SourceAttributeSet->SetScore(SourceAttributeSet->GetScore() + 1.f);
+								if (SourceAttributeSet->GetScore() >= PlayerCharacter->GetWinRequireScores())
+								{
+									UGameplayStatics::OpenLevelBySoftObjectPtr(PlayerCharacter, PlayerCharacter->SuccessMap);
+								}
 							}
 						}
 					}

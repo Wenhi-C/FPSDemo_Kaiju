@@ -38,9 +38,18 @@ public:
 
 	UPROPERTY(BlueprintReadOnly, BlueprintAssignable, BlueprintCallable)
 	FOnFireSignature OnFireDelegate;
+
+	UFUNCTION()
+	int32 GetWinRequireScores() const { return WinRequireScores; }
+
+	UPROPERTY(EditDefaultsOnly)
+	TSoftObjectPtr<UWorld> SuccessMap;
 protected:
 
 	virtual void InitAbilityActorInfo() override;
+
+	UPROPERTY(EditDefaultsOnly)
+	int32 WinRequireScores = 10;
 
 	
 
