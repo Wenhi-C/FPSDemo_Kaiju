@@ -48,6 +48,7 @@ void AKaijuBullet::OnSphereOverlap(UPrimitiveComponent* OverlappedComponent, AAc
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	if (OtherActor == GetOwner()) return;
+	if (OtherActor->ActorHasTag(SourceActorTag)) return;
 	if (ImpactSound)
 	{
 		UGameplayStatics::PlaySoundAtLocation(this, ImpactSound, GetActorLocation());
