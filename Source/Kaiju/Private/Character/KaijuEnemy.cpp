@@ -37,6 +37,16 @@ void AKaijuEnemy::Die_Implementation()
 	Super::Die_Implementation();
 	SetLifeSpan(LifeSpan);
 	GetMovementComponent()->StopActiveMovement();
+	if (KaijuAIController && KaijuAIController->GetBlackboardComponent())
+	{
+		KaijuAIController->GetBlackboardComponent()->SetValueAsBool(FName("Dead"), true);
+	}
+}
+
+void AKaijuEnemy::MulticastHandleDeath()
+{
+	Super::MulticastHandleDeath();
+
 }
 
 void AKaijuEnemy::BeginPlay()

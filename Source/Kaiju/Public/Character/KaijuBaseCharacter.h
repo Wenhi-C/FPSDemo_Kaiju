@@ -35,6 +35,9 @@ public:
 
 	// 初始化关于GAS的信息
 	virtual void InitAbilityActorInfo();
+
+	UPROPERTY()
+	bool bDie = false;
 	
 protected:
 

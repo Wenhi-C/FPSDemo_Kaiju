@@ -28,6 +28,8 @@ public:
 	FOnAttributeChangeSignature OnHealthChangedDelegate;
 
 	virtual void Die_Implementation() override;
+
+	virtual void MulticastHandleDeath() override;
 	
 protected:
 	virtual void BeginPlay() override;
